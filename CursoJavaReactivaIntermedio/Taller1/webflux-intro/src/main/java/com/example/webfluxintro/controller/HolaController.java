@@ -28,7 +28,6 @@ public class HolaController {
         return Mono.just(nombre)
                 .map(String::toUpperCase) // Transforma el nombre a mayúsculas
                 .map(nombreEnMayusculas -> "¡Hola, " + nombreEnMayusculas + "! BIENVENIDO A WEBFLUX.");
-//        return Mono.just("¡Hola, " + nombre + "! Bienvenido a WebFlux.");
     }
 
     @GetMapping("/mensaje")

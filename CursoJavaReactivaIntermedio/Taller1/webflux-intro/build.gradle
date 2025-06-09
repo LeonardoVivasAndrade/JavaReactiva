@@ -14,11 +14,11 @@ java {
 }
 
 repositories {
-	mavenCentral()
-//	maven { url "https://artifactory.apps.bancolombia.com/maven-bancolombia/" }
-//	maven { url "https://artifactory.apps.bancolombia.com/jcenter/" }
-//	maven { url "https://artifactory.apps.bancolombia.com/common-maven/" }
-//	maven { url "https://artifactory.apps.bancolombia.com/global-bancolombia/" }
+//	mavenCentral()
+	maven { url "https://artifactory.apps.bancolombia.com/maven-bancolombia/" }
+	maven { url "https://artifactory.apps.bancolombia.com/jcenter/" }
+	maven { url "https://artifactory.apps.bancolombia.com/common-maven/" }
+	maven { url "https://artifactory.apps.bancolombia.com/global-bancolombia/" }
 }
 
 dependencies {
@@ -26,6 +26,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
