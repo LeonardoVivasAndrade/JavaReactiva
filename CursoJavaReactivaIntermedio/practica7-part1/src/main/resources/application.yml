@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+#      uri: mongodb://localhost:27017/cashflow
+      uri: mongodb+srv://alvivasbancolombiacomco:angel.1994@cluster0.udlcnzl.mongodb.net/banking
+#      uri: mongodb+srv://admin:admin1@cluster0.bkkmgbg.mongodb.net/banking
+
+ledger:
+  base-url: http://localhost:8081
+logging:
+  level:
+    org.springframework.web.reactive.function.client.ExchangeFunction: TRACE
+
+server:
+  port: 8081
