@@ -1,0 +1,18 @@
+spring:
+  data:
+    mongodb:
+#      uri: mongodb://localhost:27017/cashflow
+      uri: mongodb+srv://alvivasbancolombiacomco:angel.1994@cluster0.udlcnzl.mongodb.net/banking
+#      uri: mongodb+srv://admin:admin1@cluster0.bkkmgbg.mongodb.net/banking
+  rabbitmq:
+#    addresses: amqps://gkqkhzcd:yy3Nr2UtxRl9u0b0SFQ4pmJEjMlQxI7O@possum.lmq.cloudamqp.com/gkqkhzcd
+    addresses: amqp://guest:guest@localhost:5672
+    virtual-host: com.angel.javareactiva
+ledger:
+  base-url: http://localhost:8081
+logging:
+  level:
+    org.springframework.web.reactive.function.client.ExchangeFunction: TRACE
+
+server:
+  port: 8081
