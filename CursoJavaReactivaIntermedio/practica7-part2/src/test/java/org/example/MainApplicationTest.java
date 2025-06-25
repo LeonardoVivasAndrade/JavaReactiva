@@ -41,4 +41,23 @@ public class MainApplicationTest {
                 .expectBody()
                 .jsonPath("$.status").isEqualTo("POSTED");
     }
+
+    @Test
+    void findByTest() {
+        Map<String, Object> req = Map.of("amount", 100, "currency", "USD");
+
+        client.post().uri("/cash-out")
+                .bodyValue(req)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").value(id -> {
+                    client.get().uri("/transactions/{id}", id)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.id").isEqualTo(id)
+                            .jsonPath("$.status").isEqualTo("POSTED"); // o el estado esperado
+                });
+    }
 }

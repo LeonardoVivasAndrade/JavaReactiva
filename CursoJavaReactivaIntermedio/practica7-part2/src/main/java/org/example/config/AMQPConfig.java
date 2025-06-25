@@ -15,10 +15,15 @@ public class AMQPConfig {
     public static final String ROUTING_KEY = "transaction.created";
     public static final String QUEUE_KEY = "transaction.created.queue";
 
+
     //ledger
     public static final String EXCHANGE_LEDGER = "ledger.exchange";
     public static final String ROUTING_LEDGER_KEY = "ledger.entry.request";
     public static final String QUEUE_LEDGER_KEY = "ledger.entry.request.queue";
+
+    //audit
+    public static final String AUDIT_ROUTING_KEY = "transaction.audit";
+    public static final String AUDIT_QUEUE_KEY = "audit.queue";
 
     //estas configuraciones se crean en el broker,
     // esto no siempre se puede hacer depende de los permisos que se tengan, lo ideal es siempre hacerlo
@@ -53,6 +58,18 @@ public class AMQPConfig {
         return BindingBuilder.bind(ledgetQueue()).to(ledgerExchange()).with(ROUTING_LEDGER_KEY);
     }
     //ledger
+
+    //audit
+    @Bean
+    public Queue auditQueue(){
+        return new Queue(AUDIT_QUEUE_KEY, true);
+    }
+
+    @Bean
+    public Binding auditBinding(Queue auditQueue, DirectExchange  exchange){
+        return BindingBuilder.bind(auditQueue).to(exchange).with(AUDIT_ROUTING_KEY);
+    }
+    //audit
 
     @Bean
     public MessageConverter jsonMessageConverter(){

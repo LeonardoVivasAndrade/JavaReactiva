@@ -5,8 +5,7 @@ import org.example.dto.TransactionDto;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
 
-import static org.example.config.AMQPConfig.EXCHANGE;
-import static org.example.config.AMQPConfig.ROUTING_KEY;
+import static org.example.config.AMQPConfig.*;
 
 @Slf4j
 @Component
@@ -19,6 +18,11 @@ public class Publisher {
 
     public void publishCreated(TransactionDto tx){
         template.convertAndSend(EXCHANGE, ROUTING_KEY, tx);
-        log.info("Publisher: Transacción enviada exitosamente: {}", tx);
+        log.info("Publisher: Evento transacción enviado exitosamente: {}", tx);
+    }
+
+    public void publishAudit(TransactionDto tx){
+        template.convertAndSend(EXCHANGE, AUDIT_ROUTING_KEY, tx);
+        log.info("Publisher: Evento auditoria enviado exitosamente: {}", tx);
     }
 }

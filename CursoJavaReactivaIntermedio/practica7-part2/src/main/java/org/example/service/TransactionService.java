@@ -34,6 +34,7 @@ public class TransactionService {
                 .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(1)))
                 //publica la transaccion en amqp
                 .doOnSuccess(publisher::publishCreated)
+                .doOnSuccess(publisher::publishAudit)
                 // se hace un rollback
                 .onErrorResume(e -> rollback(tx,e));
     }
@@ -48,6 +49,7 @@ public class TransactionService {
                 .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(1)))
                 //publica la transaccion en amqp
                 .doOnSuccess(publisher::publishCreated)
+                .doOnSuccess(publisher::publishAudit)
                 // se hace un rollback
                 .onErrorResume(e -> rollback(tx,e));
     }
@@ -55,7 +57,8 @@ public class TransactionService {
     public Mono<TransactionDto> findById(String id) {
         return transactionRepository
                 .findById(id)
-                .map(this::toDto);
+                .map(this::toDto)
+                .doOnSuccess(publisher::publishAudit);
     }
 
     private Mono<TransactionDto> rollback(Transaction tx, Throwable e) {
