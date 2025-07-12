@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "389c488c-b205-4840-8f19-de5ccec763da",
+		"name": "BoxProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39401328"
+	},
+	"item": [
+		{
+			"name": "Update Movements file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "user",
+						"value": "angelvivas",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "Archivo valido csv",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "file",
+							"description": "Archivo diferente a csv",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"description": "Archivo mayr a 5mb",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/api/boxes/BOX-001/movements/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"boxes",
+						"BOX-001",
+						"movements",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create box",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var boxId = jsonData.id;\r",
+							"\r",
+							"pm.collectionVariables.unset('var_boxId');\r",
+							"pm.collectionVariables.set(\"var_boxId\", boxId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "created-by",
+						"value": "angelvivas",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{$randomUUID}}\",\n    \"name\": \"Caja Principal\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/box/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find box by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/box/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find all boxes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/boxes?status=CLOSED",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"boxes"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "CLOSED"
+						},
+						{
+							"key": "createdBy",
+							"value": "Leonardo",
+							"disabled": true
+						},
+						{
+							"key": "openedAfter",
+							"value": "2025-07-07T00:00:00",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open box",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/box/open/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"open",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close box",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/box/close/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"close",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update box name",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"New name caja Principal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/box/update-name/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"update-name",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen box",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/box/open/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"open",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete box",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "responsible",
+						"value": "angelvivas",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/box/{{var_boxId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"box",
+						"{{var_boxId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "var_boxId",
+			"value": ""
+		}
+	]
+}
